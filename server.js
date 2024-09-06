@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://<db_username>:<db_password>@bus-app.n8bw1.mongodb.net/?retryWrites=true&w=majority&appName=bus-app', {
+mongoose.connect('mongodb+srv://<solobirdacademy@gmail.com>:<Hassansuhailsan22@>@cluster0.xxxxx.mongodb.net/busapp?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB Atlas connected'))
 .catch(err => console.log('Error connecting to MongoDB Atlas:', err));
+
 
 
 // Middleware
