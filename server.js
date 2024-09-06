@@ -1,24 +1,28 @@
-const mongoose = require('mongoose');
+const express = require('express');  // Import express
+const mongoose = require('mongoose');  // Import mongoose
+const bodyParser = require('body-parser');  // Import body-parser
+const apiRoutes = require('./routes/api');  // Import your routes
 
-mongoose.connect('mongodb+srv://<solobirdacademy@gmail.com>:<Hassansuhailsan22@>@cluster0.xxxxx.mongodb.net/busapp?retryWrites=true&w=majority', {
+// Initialize the app
+const app = express();
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));  // Use body-parser for form data
+app.use(bodyParser.json());  // Use body-parser for JSON data
+
+// Set up the database connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/busapp', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB Atlas connected'))
-.catch(err => console.log('Error connecting to MongoDB Atlas:', err));
-
-
-
-// Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs');
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
-app.use('/', require('./routes/api'));
+app.use('/api', apiRoutes);
 
-// Start server
-const PORT = 3000;
+// Server listening
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
